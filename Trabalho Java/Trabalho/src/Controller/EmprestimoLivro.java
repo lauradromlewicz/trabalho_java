@@ -11,31 +11,36 @@ public class EmprestimoLivro {
     private Usuario usuario;
     private Livro livro;
 
-
-    public EmprestimoLivro(LocalDate dataEmprestimo, LocalDate dataDevolucao, String nome, int id, CadastroUsuario usuario, CadastroLivro livros, LivrosEmprestados livrosEmprestados) {
-        this.dataEmprestimo = dataEmprestimo;
-        this.dataDevolucao = dataDevolucao;
-        if (livros.buscarLivro(id).getDisponiveis() > 0){
-            this.livro = livros.buscarLivro(id);
-            livros.buscarLivro(id).setDisponiveis();
-            livros.buscarLivro(id).setPopularidade();
-            livrosEmprestados.getLivrosEmprestados().add(livro);
-        }
-        this.usuario = usuario.buscarUsuario(nome); }
+    public boolean realizarEmprestimo(LocalDate dataEmprestimo, LocalDate dataDevolucao, Usuario usuario, Livro livro, LivrosEmprestados livrosEmprestados) {
         
-    
-        public boolean atrasados(){
-            LocalDate currentDate = LocalDate.now();
-            return dataDevolucao.isBefore(currentDate);
-        }
-        
+        if (livro.getDisponiveis() > 0) {
+            this.dataEmprestimo = dataEmprestimo;
+            this.dataDevolucao = dataDevolucao;
+            this.usuario = usuario;
+            this.livro = livro;
 
-    public String devolucao(LocalDate data){
+            
+            livro.removerExemplar();
+            
+            livro.incrementarPopularidade();
+           
+            livrosEmprestados.adicionarLivro(livro);
+
+            return true; 
+        } else {
+            return false; 
+        }
+    }
+
+    public boolean atrasados() {
+        LocalDate currentDate = LocalDate.now();
+        return dataDevolucao.isBefore(currentDate);
+    }
+
+    public String devolucao(LocalDate data) {
         setDataEfetiva(data);
-        livro.setDevolver();
-
+        livro.adicionarExemplar(); 
         return "O livro foi devolvido \n";
-        
     }
 
     public LocalDate getDataEmprestimo() {
@@ -66,7 +71,7 @@ public class EmprestimoLivro {
         return livro;
     }
 
-    public void setLivro(Livro livro) {
+    public void setLivros(Livro livro) {
         this.livro = livro;
     }
 
@@ -74,7 +79,7 @@ public class EmprestimoLivro {
         return usuario;
     }
 
-    public void setUsuarios(Usuario usuario) {
+    public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
 

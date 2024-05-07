@@ -1,7 +1,6 @@
 package Models;
 
-
-public class Livro implements Comparable{
+public class Livro implements Comparable<Livro> {
     private String autor;
     private String titulo;
     private int anoPublicacao;
@@ -9,65 +8,60 @@ public class Livro implements Comparable{
     private int id;
     private int popularidade;
     
-
     public Livro(String autor, String titulo, int anoPublicacao, int disponiveis, int id) {
         this.autor = autor;
         this.titulo = titulo;
         this.anoPublicacao = anoPublicacao;
         this.disponiveis = disponiveis;
         this.id = id;
-        
+        this.popularidade = 0;
     }
-
 
     public String getAutor() {
         return autor;
     }
 
-
     public void setAutor(String autor) {
         this.autor = autor;
     }
-
 
     public String getTitulo() {
         return titulo;
     }
 
-
     public void setTitulo(String titulo) {
         this.titulo = titulo;
     }
-
 
     public int getAnoPublicacao() {
         return anoPublicacao;
     }
 
-
     public void setAnoPublicacao(int anoPublicacao) {
         this.anoPublicacao = anoPublicacao;
     }
-
 
     public int getDisponiveis() {
         return disponiveis;
     }
 
-
-    public void setDisponiveis() {
-        this.disponiveis = this.disponiveis--;
+    public void setDisponiveis(int disponiveis) {
+        this.disponiveis = disponiveis;
     }
 
-    public void setDevolver() {
-        this.disponiveis = this.disponiveis++;
+    public void adicionarExemplar() {
+        this.disponiveis++;
     }
 
-    public int getId () {
+    public void removerExemplar() {
+        this.disponiveis--;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId (int id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -75,23 +69,25 @@ public class Livro implements Comparable{
         return popularidade;
     }
 
-
-    public void setPopularidade() {
-        this.popularidade = this.popularidade++;
+    public void setPopularidade(int popularidade) {
+        this.popularidade = popularidade;
     }
 
-
-
-
-    @Override
-    public String toString() {
-        return "CadastroLivro [autor=" + autor + ", titulo=" + titulo + ", anoPublicacao=" + anoPublicacao
-                + ", disponiveis=" + disponiveis + ", Id="+ id + ",  popularidade=" + popularidade+ "]";
+    public void incrementarPopularidade() {
+        this.popularidade++;
     }
-   
+
+    
     @Override
     public int compareTo(Livro livro) {
-        return Integer.compare(livro.popularidade, this.popularidade);
+        return Integer.compare(this.popularidade, livro.popularidade);
     }
-    
+
+  
+    @Override
+    public String toString() {
+        return "Livro [autor=" + autor + ", titulo=" + titulo + ", anoPublicacao=" + anoPublicacao + ", disponiveis="
+                + disponiveis + ", id=" + id + ", popularidade=" + popularidade + "]";
+    }
+
 }

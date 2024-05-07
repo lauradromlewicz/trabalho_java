@@ -6,8 +6,8 @@ public class Usuario extends Pessoa {
     private String endereco;
     private String email;
   
-    public Usuario(String nome, int telefone, String endereco, String email) {
-        super(nome, telefone);
+    public Usuario(String nome, int tele, String endereco, String email) {
+        super(nome, tele);
         this.endereco = endereco;
         this.email = email;
     }
@@ -35,7 +35,7 @@ public class Usuario extends Pessoa {
 
     @Override
     public String toString() {
-        return "Usuario [nome = " + super.getNome() + ", telefone = " + super.getTelefone() + ", endereco=" + endereco + ", email=" + email + "]";
+        return "Usuario [nome = " + super.getNome() + ", telefone = " + super.getTele() + ", endereco=" + endereco + ", email=" + email + "]";
     }
     
 }
